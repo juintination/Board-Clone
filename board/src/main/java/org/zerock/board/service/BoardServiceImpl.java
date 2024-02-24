@@ -14,6 +14,7 @@ import org.zerock.board.entity.Member;
 import org.zerock.board.repository.BoardRepository;
 import org.zerock.board.repository.ReplyRepository;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 @Service
@@ -53,5 +54,16 @@ public class BoardServiceImpl implements BoardService {
     public void removeWithReplies(Long bno) {
         replyRepository.deleteByBno(bno);
         repository.deleteById(bno);
+    }
+
+    @Override
+    public void modify(BoardDTO boardDTO) {
+        Optional<Board> optionalBoard = repository.findById(boardDTO.getBno());
+        if (optionalBoard.isPresent()) {
+            Board board = optionalBoard.get();
+            board.changeTitle(boardDTO.getTitle());
+            board.changeContent(boardDTO.getContent());
+            repository.save(board);
+        }
     }
 }

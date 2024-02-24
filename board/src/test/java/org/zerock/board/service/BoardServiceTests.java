@@ -44,4 +44,14 @@ public class BoardServiceTests {
         Long bno = 1L;
         boardService.removeWithReplies(bno);
     }
+
+    @Test
+    public void testModify() {
+        BoardDTO boardDTO = BoardDTO.builder()
+                .bno(2L)
+                .title("Changed Title")
+                .content("Changed Content")
+                .build();
+        boardService.modify(boardDTO);
+    }
 }
