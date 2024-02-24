@@ -3,6 +3,7 @@ package org.zerock.board.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 import org.zerock.board.entity.Board;
 import org.zerock.board.entity.Member;
 
@@ -28,6 +29,7 @@ public class BoardRepositoryTests {
         });
     }
 
+    @Transactional
     @Test
     public void readBoard() {
         Optional<Board> result = boardRepository.findById(100L);
