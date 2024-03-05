@@ -3,6 +3,7 @@ package org.zerock.board.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 import org.zerock.board.entity.Board;
 import org.zerock.board.entity.Reply;
 
@@ -19,7 +20,7 @@ public class ReplyRepositoryTests {
     @Test
     public void insertReplies() {
         IntStream.rangeClosed(1, 300).forEach(i -> {
-            long bno = (long) (Math.random() * 100) + 1;
+            long bno = (long) (Math.random() * 100) + 2;
             Board board = Board.builder().bno(bno).build();
             Reply reply = Reply.builder()
                     .text("Reply......." + i)
@@ -30,6 +31,7 @@ public class ReplyRepositoryTests {
         });
     }
 
+    @Transactional
     @Test
     public void readReply() {
         Optional<Reply> result = replyRepository.findById(1L);
