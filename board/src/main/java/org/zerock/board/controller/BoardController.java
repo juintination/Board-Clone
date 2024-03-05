@@ -14,12 +14,17 @@ import org.zerock.board.dto.PageRequestDTO;
 import org.zerock.board.service.BoardService;
 
 @Controller
-@RequestMapping("/board/")
+@RequestMapping("/board")
 @Log4j2
 @RequiredArgsConstructor
 public class BoardController {
 
     private final BoardService boardService;
+
+    @GetMapping("/")
+    public String index() {
+        return "redirect:/board/list";
+    }
 
     @GetMapping("/list")
     public void list(PageRequestDTO pageRequestDTO, Model model) {

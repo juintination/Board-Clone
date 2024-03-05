@@ -12,7 +12,7 @@ import org.zerock.board.service.ReplyService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/replies/")
+@RequestMapping("/replies")
 @Log4j2
 @RequiredArgsConstructor
 public class ReplyController {
@@ -25,7 +25,7 @@ public class ReplyController {
         return new ResponseEntity<>(replyService.getList(bno), HttpStatus.OK);
     }
 
-    @PostMapping("")
+    @PostMapping("/")
     public ResponseEntity<Long> register(@RequestBody ReplyDTO replyDTO) {
         log.info(replyDTO);
         Long rno = replyService.register(replyDTO);
