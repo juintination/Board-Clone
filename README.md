@@ -26,16 +26,30 @@ This project uses the [Udacity Nanoderee Style](https://udacity.github.io/git-st
 
 ```
 git clone https://github.com/juintination/Board-Clone.git
+
+cd Board-Clone/board
 ```
 
-2. Open Project with IntelliJ
+2. Build Project with Gradle
 
-Select `build.gradle` in the board directory and `Open as Project`
+```
+./gradlew clean build -x test
+```
 
-3. Modify application.properties
+3. Build docker image
 
-Modify the `application.properties` file to suit your DB environment.
+```
+docker build -t board-image .
+```
 
-4. Run the application
+4. Run with docker enviornment
 
-Run `BoardApplication.java` and go to `localhost:8080/board/list/`
+```
+docker compose up -d
+```
+
+5. Remove docker environment
+
+```
+docker compose down
+```
