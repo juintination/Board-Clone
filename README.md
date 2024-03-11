@@ -30,25 +30,19 @@ git clone https://github.com/juintination/Board-Clone.git
 cd Board-Clone/board
 ```
 
-2. Build Project with Gradle
-
-```
-./gradlew clean build -x test
-```
-
-3. Build docker image
+2. Build docker image
 
 ```
 docker build -t board-image .
 ```
 
-4. Run with docker enviornment
+3. Run with docker enviornment
 
 ```
 docker compose up -d
 ```
 
-5. Remove docker environment
+4. Remove docker environment
 
 ```
 docker compose down
