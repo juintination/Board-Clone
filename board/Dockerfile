@@ -1,18 +1,22 @@
-FROM khipu/openjdk17-alpine
+FROM gradle:7.3.3-jdk17 AS builder
+
+WORKDIR /build
+
+COPY . /build
+
+RUN ./gradlew clean build -x test
+
 
 LABEL maintainer="juintination"
 
 LABEL email="juintin@kakao.com"
 
+
+FROM khipu/openjdk17-alpine
+
 WORKDIR /app
 
-COPY . .
-
-RUN ./gradlew clean build -x test
-
-ARG JAR_FILE=build/libs/board-0.0.1-SNAPSHOT.jar
-
-COPY ${JAR_FILE} app.jar
+COPY --from=builder /build/build/libs/*-SNAPSHOT.jar ./app.jar
 
 EXPOSE 8080
 
