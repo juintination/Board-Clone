@@ -29,8 +29,13 @@
             </div>
 
             <div class="form-group">
+                <label>Username</label>
+                <input type="text" class="form-control" name="writer" th:value="${dto.writerUsername}" readonly>
+            </div>
+
+            <div class="form-group">
                 <label >Writer</label>
-                <input type="text" class="form-control" name="writer" th:value="${dto.writerEmail}" readonly>
+                <input type="text" class="form-control" name="writer" th:value="${dto.writerName}" readonly>
             </div>
 
             <div class="form-group">

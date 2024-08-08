@@ -18,7 +18,7 @@ public class BoardServiceTests {
         BoardDTO dto = BoardDTO.builder()
                 .title("Test.")
                 .content("Test...")
-                .writerEmail("user55@test.com")
+                .writerUsername("TestUser")
                 .build();
         System.out.println(boardService.register(dto));
     }
