@@ -2,6 +2,8 @@ package org.zerock.board.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.board.dto.BoardDTO;
 import org.zerock.board.dto.PageRequestDTO;
+import org.zerock.board.entity.Member;
 import org.zerock.board.service.BoardService;
+import org.zerock.board.service.MemberService;
 
 @Controller
 @RequestMapping("/board")
@@ -20,6 +24,7 @@ import org.zerock.board.service.BoardService;
 public class BoardController {
 
     private final BoardService boardService;
+    private final MemberService memberService;
 
     @GetMapping("/")
     public String index() {
@@ -30,11 +35,15 @@ public class BoardController {
     public void list(PageRequestDTO pageRequestDTO, Model model) {
         log.info("list............." + pageRequestDTO);
         model.addAttribute("result", boardService.getList(pageRequestDTO));
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("username", username);
     }
 
     @GetMapping("/register")
-    public void register() {
-        log.info("register get...");
+    public void register(Model model) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Member member = memberService.getMember(username);
+        model.addAttribute("userId", member.getId());
     }
 
     @PostMapping("/register")
@@ -52,6 +61,8 @@ public class BoardController {
         BoardDTO boardDTO = boardService.get(bno);
         log.info(boardDTO);
         model.addAttribute("dto", boardDTO);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        model.addAttribute("username", username);
     }
 
     @PostMapping("/modify")

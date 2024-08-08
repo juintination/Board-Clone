@@ -2,16 +2,12 @@ package org.zerock.board.repository.search;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.Tuple;
-import com.querydsl.core.types.Order;
-import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.JPQLQuery;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.zerock.board.entity.Board;
 import org.zerock.board.entity.QBoard;
@@ -57,7 +53,7 @@ public class SearchBoardRepositoryImpl extends QuerydslRepositorySupport impleme
             for (String t:typeArr) {
                 switch (t) {
                     case "t" -> conditionBuilder.or(board.title.contains(keyword));
-                    case "w" -> conditionBuilder.or(member.email.contains(keyword));
+                    case "w" -> conditionBuilder.or(member.username.contains(keyword));
                     case "c" -> conditionBuilder.or(board.content.contains(keyword));
                 }
             }

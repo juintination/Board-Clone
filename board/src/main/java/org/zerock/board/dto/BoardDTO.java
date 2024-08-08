@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class BoardDTO {
     private Long bno;
     private String title, content;
-    private String writerEmail, writerName;
+    private String writerId, writerName, writerUsername;
     private LocalDateTime regDate, modDate;
     private int replyCount;
 }

@@ -21,6 +21,10 @@
             <textarea class="form-control" rows="5" name="content" readonly>[[${dto.content}]]</textarea>
         </div>
         <div class="form-group">
+            <label>Username</label>
+            <input type="text" class="form-control" name="writer" th:value="${dto.writerUsername}" readonly>
+        </div>
+        <div class="form-group">
             <label>Writer</label>
             <input type="text" class="form-control" name="writer" th:value="${dto.writerName}" readonly>
         </div>
@@ -33,7 +37,7 @@
             <input type="text" class="form-control" name="modDate" th:value="${#temporals.format(dto.modDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>
         </div>
 
-        <a th:href="@{/board/modify(bno = ${dto.bno}, page=${requestDTO.page}, type=${requestDTO.type}, keyword =${requestDTO.keyword})}">
+        <a th:if="${username == dto.writerUsername}" th:href="@{/board/modify(bno = ${dto.bno}, page=${requestDTO.page}, type=${requestDTO.type}, keyword =${requestDTO.keyword})}">
             <button type="button" class="btn btn-primary">Modify</button>
         </a>
 
@@ -65,7 +69,7 @@
                             <input class="form-control"  type="text" name="replyText" placeholder="Reply Text...">
                         </div>
                         <div class="form-group">
-                            <input class="form-control"  type="text" name="replyer" placeholder="Replyer">
+                            <input class="form-control" type="text" name="replyer" th:value="${username}" readonly>
                             <input type="hidden" name="rno" >
                         </div>
                     </div>
@@ -146,7 +150,7 @@
 
                     // 댓글 입력하는 부분 초기화 시키기
                     $('input[name="replyText"]').val('');
-                    $('input[name="replyer"]').val('');
+                    $('input[name="replyer"]').val([[${username}]]);
 
 
                     $(".modal-footer .btn").hide(); // 모달 내의 모든 버튼을 안 보이도록
@@ -188,11 +192,24 @@
                     $("input[name='replyer']").val( $(this).find('.card-subtitle').html());
                     $("input[name='rno']").val(rno);
 
-                    $(".modal-footer .btn").hide();
-                    $(".replyRemove, .replyModify, .replyClose").show();
+                    // 현재 사용자와 댓글 작성자가 같지 않은 경우 replyText를 readonly로 설정합니다.
+                    if ($('input[name="replyer"]').val() !== [[${username}]]) {
+                        $('input[name="replyText"]').prop('readonly', true);
+                        $('input[name="replyText"]').css('background-color', 'white'); // 배경색을 흰색으로 설정합니다.
+                    } else {
+                        $('input[name="replyText"]').prop('readonly', false);
+                    }
+
+                    $(".modal-footer .btn").hide(); // 모든 버튼을 숨깁니다.
+
+                    // 현재 사용자와 댓글 작성자가 같은 경우에만 수정 및 삭제 버튼을 보여줍니다.
+                    if ($('input[name="replyer"]').val() === [[${username}]]) {
+                        $(".replyRemove, .replyModify").show();
+                    }
+
+                    $(".replyClose").show(); // 닫기 버튼은 항상 보여줍니다.
 
                     modal.modal('show');
-
                 });
 
                 $(".replyRemove").on("click", function() {

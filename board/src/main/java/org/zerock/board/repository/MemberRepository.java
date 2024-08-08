@@ -4,4 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.zerock.board.entity.Member;
 
 public interface MemberRepository extends JpaRepository<Member, String> {
+    boolean existsByUsername(String username);
+    Member findByUsername(String username);
 }
