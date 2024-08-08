@@ -32,7 +32,7 @@ public class MemberController {
 
     @PostMapping("/joinProc")
     public String joinProcess(MemberDTO memberDTO) {
-        System.out.println(memberDTO.getName());
+        log.info("member dto..." + memberDTO);
         long result = memberService.join(memberDTO);
         if (result == 0) {
             return "redirect:/join";
@@ -45,7 +45,7 @@ public class MemberController {
     public String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication != null) {
+        if (authentication != null) {
             new SecurityContextLogoutHandler().logout(request, response, authentication);
         }
 
