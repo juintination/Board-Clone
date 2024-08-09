@@ -37,4 +37,9 @@ public class MemberServiceImpl implements MemberService {
     public Member getMember(String username) {
         return memberRepository.findByUsername(username);
     }
+
+    @Override
+    public boolean isUsernameTaken(String username) {
+        return memberRepository.existsByUsername(username);
+    }
 }

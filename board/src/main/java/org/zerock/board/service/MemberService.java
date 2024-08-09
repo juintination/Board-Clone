@@ -6,4 +6,5 @@ import org.zerock.board.entity.Member;
 public interface MemberService {
     long join(MemberDTO memberDTO);
     Member getMember(String username);
+    boolean isUsernameTaken(String username);
 }

@@ -23,7 +23,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/css/**", "/vendor/**", "/favicon.ico/**").permitAll()
-                        .requestMatchers("/", "/login", "/loginProc", "/join", "/joinProc").permitAll()
+                        .requestMatchers("/", "/login", "/loginProc", "/join", "/joinProc", "/checkUsername").permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .requestMatchers("/board/**").hasAnyRole("ADMIN", "USER")
                         .requestMatchers("/replies/**").hasAnyRole("ADMIN", "USER")
