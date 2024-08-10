@@ -22,10 +22,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         Member userData = memberRepository.findByUsername(username);
 
-        if (userData != null) {
-            return new CustomUserDetails(userData);
+        if (userData == null) {
+            throw new UsernameNotFoundException("User not found with username: " + username);
         }
 
-        return null;
+        return new CustomUserDetails(userData);
     }
 }
